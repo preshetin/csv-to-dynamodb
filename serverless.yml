@@ -34,7 +34,7 @@ provider:
   
 functions:
   save:
-    handler: handler.save
+    handler: save.main
     environment:
       BUCKET: ${self:custom.bucket}
   import:
