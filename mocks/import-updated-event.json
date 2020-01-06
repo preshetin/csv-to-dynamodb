@@ -1,0 +1,14 @@
+{
+  "Records": [
+    {
+      "s3": {
+        "bucket": {
+          "name": "csv-to-dynamodb-petr-reshetin"
+        },
+        "object": {
+          "key": "small_updated.csv"
+        }
+      }
+    }
+  ]
+}

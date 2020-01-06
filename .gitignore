@@ -50,3 +50,6 @@ env.yml
 
 # Jetbrains IDEs
 .idea
+
+# Using this dir for testinng, for syncing bucket
+bucket-dir
