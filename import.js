@@ -1,5 +1,6 @@
 import AWS from 'aws-sdk';
 import parse from 'csv-parser';
+// import fs from 'fs';
 
 const tableHeaders = [
   'item0', 'item1', 'item2',
@@ -8,7 +9,8 @@ const tableHeaders = [
   'item9', 'item10', 'item11',
   'item12', 'item13', 'item14',
   'item15', 'item16', 'item17',
-  'item18', 'licenceId'
+  'item18', 'licenceId', 'item20',
+  'item21', 'item22'
 ];
 
 const s3 = new AWS.S3();
@@ -23,6 +25,7 @@ export const main = (event, context, callback) => {
 
   console.log('importing file: ', objectkey);
 
+  // var file = fs.createReadStream('/Users/petrreshetin/Code/sandbox/csv-to-dynamodb/bucket-dir/1000-rows.csv');
   var file = s3.getObject(params).createReadStream();
 
   file.pipe(parse(tableHeaders))
@@ -40,7 +43,7 @@ export const main = (event, context, callback) => {
         const params = getParams(item);
         dynamoDb.update(params, (err, data) => {
           if (err) {
-            console.error(err);
+            console.error(err, item);
             throw new Error('Error while updating dynamodb table');
           }
         });
