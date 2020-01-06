@@ -39,10 +39,12 @@ export const main = (event, context, callback) => {
       data_arr.forEach(item => {
         const params = getParams(item);
         dynamoDb.update(params, (err, data) => {
-          if (err) console.error(err);
+          if (err) {
+            console.error(err);
+            throw new Error('Error while updating dynamodb table');
+          }
         });
       });
-      callback(null, 'all good');
     } catch (err) {
       console.error(err);
     }
@@ -57,8 +59,8 @@ export const main = (event, context, callback) => {
       },
       UpdateExpression: "SET item1 = :item1, item2 = :item2",
       ExpressionAttributeValues: {
-        ":item1": item.item1,
-        ":item2": item.item2
+        ":item1": item.item1 || null,
+        ":item2": item.item2 || null
       },
       ReturnValues: "ALL_NEW"
     };
