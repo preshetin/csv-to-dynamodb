@@ -4,6 +4,8 @@ import AWS from 'aws-sdk';
 const s3 = new AWS.S3();
 
 export const main = (event, context, callback) => {
+  let key = event.key;
+  let targetFileName = key.split(".")[0] + '-' + Date.now() + '.' + key.split(".")[1];
   fetch(event.image_url)
     .then((response) => {
       if (response.ok) {
@@ -16,7 +18,7 @@ export const main = (event, context, callback) => {
     .then(buffer => (
       s3.putObject({
         Bucket: process.env.BUCKET,
-        Key: `${event.key}-${Date.now()}`,
+        Key: targetFileName,
         Body: buffer,
       }).promise()
     ))
